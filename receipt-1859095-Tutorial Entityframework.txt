@@ -1,0 +1,8 @@
+Envio bem-sucedido!
+Curso: 1859095, Tópicos Especiais de Sistemas - NA_ (Not) _UP-OSO_POSITIVO
+Avaliação: Tutorial Entityframework
+
+Data de envio: 13/06/24 16:17 (Com atraso)
+Tamanho do envio: 191 bytes
+Autor do envio: Guilherme Rodrigues UP_Cst em Análise e Desenvolvimento de Sistemas_2NA_20241
+Número de confirmação: 62c2b47285a84c16963bf34d99f385ee
