@@ -24,6 +24,55 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//Endpoint para consultar os clientes no BD:
+app.MapGet("/clientes", async (LojaDbContext dbContext) =>
+{
+    var clientes = await dbContext.Clientes.ToListAsync();
+    return Results.Ok(clientes);
+});
+
+//Endpoint para localizar um cliente a partir de sua ID no BD:
+app.MapGet("/clientes/{id}", async (int id, LojaDbContext dbContext) =>
+{
+    var cliente = await dbContext.Clientes.FindAsync(id);
+    if(cliente == null){
+        return Results.NotFound($"Cliente with ID {id} not found");
+    }
+    return Results.Ok(cliente);
+});
+
+//Endpoint para atualizar um cliente existente:
+app.MapPut("/clientes/{id}", async (int id, LojaDbContext dbContext, Cliente updateCliente) =>
+{
+    //Verifica se o cliente existe na base, conforme o id informado
+    //Se o cliente existir na base, será retornado para dentro do objeto existingCliente
+    var existingCliente = await dbContext.Clientes.FindAsync(id);
+    if(existingCliente == null){
+        return Results.NotFound($"Cliente with ID {id} not found");
+    }
+
+    //Atualiza os dados do existingProduto:
+    existingCliente.Nome = updateCliente.Nome;
+    existingCliente.Cpf = updateCliente.Cpf;
+    existingCliente.Email = updateCliente.Email;
+
+    //Salva no banco de dados:
+    await dbContext.SaveChangesAsync();
+
+    //Retorna os dados para o cliente que invocou o endpoint:
+    return Results.Ok(existingCliente);
+
+});
+
+
+
+app.MapPost("/createcliente", async (LojaDbContext dbContext, Cliente newCliente) =>
+{
+    dbContext.Clientes.Add(newCliente);
+    await dbContext.SaveChangesAsync();
+    return Results.Created($"/createcliente/{newCliente.Id}", newCliente);
+});
+
 //Endpoint para atualizar um produto existente:
 app.MapPut("/produtos/{id}", async (int id, LojaDbContext dbContext, Produto updateProduto) =>
 {
