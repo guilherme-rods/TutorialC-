@@ -1,0 +1,8 @@
+Envio bem-sucedido!
+Curso: 1859095, Tópicos Especiais de Sistemas - NA_ (Not) _UP-OSO_POSITIVO
+Avaliação: Atividade prática (Etapa 8 do tutorial)
+
+Data de envio: 21/06/24 17:03 (Com atraso)
+Tamanho do envio: 165 bytes
+Autor do envio: Guilherme Rodrigues UP_Cst em Análise e Desenvolvimento de Sistemas_2NA_20241
+Número de confirmação: 6d7d662ce4ee4886808865e645ef71ff

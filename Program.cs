@@ -1,12 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using loja.models;
 using loja.services;
+using loja.data;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<LojaDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    new MySqlServerVersion(new Version(8, 0, 26))));
 builder.Services.AddScoped<ProductService>();
 
 var app = builder.Build();
