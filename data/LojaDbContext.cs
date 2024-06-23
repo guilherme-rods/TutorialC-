@@ -9,5 +9,6 @@ namespace loja.data
 
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Fornecedor> Fornecedores { get; set; }
     }
 }
