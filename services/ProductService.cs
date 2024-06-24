@@ -35,7 +35,7 @@ namespace loja.services
         }
 
         // Método para atualizar os dados de um produto
-        public async Task UpdateProductAsync(Produto produto)
+        public async Task UpdateProductAsync(int id, Produto produto)
         {
             _dbContext.Entry(produto).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
