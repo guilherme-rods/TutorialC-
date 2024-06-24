@@ -18,7 +18,7 @@ builder.Services.AddDbContext<LojaDbContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 26))));
 
 // Adicionar serviços ao contêiner.
-builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<FornecedorService>();
 builder.Services.AddScoped<UsuarioService>();
@@ -94,15 +94,15 @@ app.MapPost("/login", async (HttpContext context, UsuarioService usuarioService)
 
 
 
-app.MapGet("/produtos", async (ProductService productService) =>
+app.MapGet("/produtos", async (ProdutoService produtoService) =>
 {
-    var produtos = await productService.GetAllProductsAsync();
+    var produtos = await produtoService.GetAllProdutosAsync();
     return Results.Ok(produtos);
 }).RequireAuthorization();
 
-app.MapGet("/produtos/{id}", async (int id, ProductService productService) =>
+app.MapGet("/produtos/{id}", async (int id, ProdutoService produtoService) =>
 {
-    var produto = await productService.GetProductByIdAsync(id);
+    var produto = await produtoService.GetProdutoByIdAsync(id);
     if (produto == null)
     {
         return Results.NotFound($"\nProduto com ID {id} não encontrado.");
@@ -110,21 +110,21 @@ app.MapGet("/produtos/{id}", async (int id, ProductService productService) =>
     return Results.Ok(produto);
 }).RequireAuthorization();
 
-app.MapPost("/produtos", async (Produto produto, ProductService productService) =>
+app.MapPost("/produtos", async (Produto produto, ProdutoService produtoService) =>
 {
-    await productService.AddProductAsync(produto);
+    await produtoService.AddProdutoAsync(produto);
     return Results.Created($"/produtos/{produto.Id}", produto);
 }).RequireAuthorization();
 
-app.MapPut("/produtos/{id}", async (int id, Produto produto, ProductService productService) =>
+app.MapPut("/produtos/{id}", async (int id, Produto produto, ProdutoService produtoService) =>
 {
-    await productService.UpdateProductAsync(id, produto);
+    await produtoService.UpdateProdutoAsync(id, produto);
     return Results.Ok();
 }).RequireAuthorization();
 
-app.MapDelete("/produtos/{id}", async (int id, ProductService productService) =>
+app.MapDelete("/produtos/{id}", async (int id, ProdutoService produtoService) =>
 {
-    await productService.DeleteProductAsync(id);
+    await produtoService.DeleteProdutoAsync(id);
     return Results.Ok();
 }).RequireAuthorization();
 
