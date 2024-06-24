@@ -92,7 +92,43 @@ app.MapPost("/login", async (HttpContext context, UsuarioService usuarioService)
     await context.Response.WriteAsync("\nUsuário ou senha inválidos");
 });
 
+// Endpoints de Vendas
+app.MapPost("/vendas", async (Venda venda, VendaService vendaService) =>
+{
+    try
+    {
+        var novaVenda = await vendaService.AddVendaAsync(venda);
+        return Results.Created($"/vendas/{novaVenda.Id}", novaVenda);
+    }
+    catch (ArgumentException e)
+    {
+        return Results.BadRequest(e.Message);
+    }
+}).RequireAuthorization();
 
+app.MapGet("/vendas/produto/detalhada/{produtoId}", async (int produtoId, VendaService vendaService) =>
+{
+    var vendas = await vendaService.GetVendasByProdutoDetalhadaAsync(produtoId);
+    return Results.Ok(vendas);
+}).RequireAuthorization();
+
+app.MapGet("/vendas/produto/sumarizada/{produtoId}", async (int produtoId, VendaService vendaService) =>
+{
+    var vendas = await vendaService.GetVendasByProdutoAgregadaAsync(produtoId);
+    return Results.Ok(vendas);
+}).RequireAuthorization();
+
+app.MapGet("/vendas/cliente/detalhada/{clienteId}", async (int clienteId, VendaService vendaService) =>
+{
+    var vendas = await vendaService.GetVendasByClienteDetalhadaAsync(clienteId);
+    return Results.Ok(vendas);
+}).RequireAuthorization();
+
+app.MapGet("/vendas/cliente/sumarizada/{clienteId}", async (int clienteId, VendaService vendaService) =>
+{
+    var vendas = await vendaService.GetVendasByClienteAgregadaAsync(clienteId);
+    return Results.Ok(vendas);
+}).RequireAuthorization();
 
 app.MapGet("/produtos", async (ProdutoService produtoService) =>
 {
